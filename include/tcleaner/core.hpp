@@ -1,3 +1,5 @@
+// Search also files with **
+
 #pragma once
 #ifndef TEMP_CLEANER_CORE_HPP
 #define TEMP_CLEANER_CORE_HPP
@@ -19,8 +21,9 @@ namespace tcleaner {
         private:
 
             // Methods
-            void _analyze_files(const std::string& path);
+            void _analyze_files(std::string_view path);
             void _process_gitignore(const std::string& path);
+            void _remove_file(std::string_view file);
 
             // Members
             std::string _path;
