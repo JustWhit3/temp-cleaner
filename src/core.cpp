@@ -46,6 +46,11 @@ namespace tcleaner {
         }
     }
 
+    /**
+     * @brief Prompts the user to remove a file or directory based on the given file path.
+     * 
+     * @param file The path to the file or directory.
+     */
     void tcleaner::_choose_if_remove(std::string_view file) {
         if (fs::is_regular_file(file))
             std::cout << "- Remove " << file << " file? (y/n): ";
