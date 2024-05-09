@@ -56,12 +56,15 @@ namespace tcleaner {
         std::string line;
         static std::int32_t paths_to_remove;
         while (std::getline(file_stream, line)) {
-            if (line.empty() || line[0] == '#' || line.find('*') != std::string::npos) continue;
+            if (line.empty() || line[0] == '#' || line.find('*') != std::string::npos || line.find('!') != std::string::npos) continue;
 
             std::string single_file_path = file.substr(0, file.size() - 10) + line;
             if (fs::exists(single_file_path)) {
                 paths_to_remove += 1;
-                std::cout << "- Remove " << single_file_path << " file? (y/n): ";
+                if (fs::is_regular_file(single_file_path))
+                    std::cout << "- Remove " << single_file_path << " file? (y/n): ";
+                else if (fs::is_directory(single_file_path))
+                    std::cout << "- Remove " << single_file_path << " directory? (y/n): ";
                 char proceed;
                 std::cin >> proceed;
                 if (proceed == 'y') {
