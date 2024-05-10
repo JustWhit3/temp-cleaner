@@ -48,14 +48,14 @@ namespace tcleaner {
 
     /**
      * @brief Prompts the user to remove a file or directory based on the given file path.
-     * 
+     *
      * @param file The path to the file or directory.
      */
     void tcleaner::_choose_if_remove(std::string_view file) {
         if (fs::is_regular_file(file))
-            std::cout << "- Remove " << file << " file? (y/n): ";
+            std::cout << "- Remove \033[1;32m" << file << "\033[0m file? (y/n): ";
         else if (fs::is_directory(file))
-            std::cout << "- Remove " << file << " directory? (y/n): ";
+            std::cout << "- Remove \033[1;32m" << file << "\033[0m directory? (y/n): ";
         char proceed;
         std::cin >> proceed;
         if (proceed == 'y') {
@@ -74,42 +74,47 @@ namespace tcleaner {
         std::string line;
         static std::int32_t paths_to_remove;
         while (std::getline(file_stream, line)) {
-            // Skip cases
-            if (line.empty() || line[0] == '#' || line.find('!') != std::string::npos) continue;
+            try {
+                // Skip cases
+                if (line.empty() || line[0] == '#' || line.find('!') != std::string::npos) continue;
+                if (line.back() == '/') line.pop_back();
 
-            // Case with *
-            if (line.find('*') != std::string::npos) {
-                std::string regex_pattern = std::regex_replace(line, std::regex("\\*"), ".*");
-                for (const auto& entry: fs::recursive_directory_iterator(fs::path(file).parent_path())) {
-                    if (std::regex_match(entry.path().string(), std::regex(regex_pattern))) {
-                        std::string file_to_remove = entry.path().string();
-                        if (file_to_remove.find("/.git/") != std::string::npos) continue;
-                        paths_to_remove += 1;
-                        this->_choose_if_remove(file_to_remove);
+                // Case with *
+                if (line.find('*') != std::string::npos) {
+                    std::string regex_pattern = std::regex_replace(line, std::regex("\\*"), ".*");
+                    for (const auto& entry: fs::recursive_directory_iterator(fs::path(file).parent_path())) {
+                        if (std::regex_match(entry.path().string(), std::regex(regex_pattern))) {
+                            std::string file_to_remove = entry.path().string();
+                            if (file_to_remove.find("/.git/") != std::string::npos) continue;
+                            paths_to_remove += 1;
+                            this->_choose_if_remove(file_to_remove);
+                        }
                     }
                 }
-            }
 
-            // Case with **
-            else if (line.find("**/") != std::string::npos) {
-                std::string dir_pattern = line.substr(0, line.find("**/"));
-                for (const auto& entry: fs::recursive_directory_iterator(fs::path(file).parent_path())) {
-                    if (entry.path().string().find(dir_pattern) != std::string::npos) {
-                        std::string file_to_remove = entry.path().string();
-                        if (file_to_remove.find("/.git/") != std::string::npos) continue;
-                        paths_to_remove += 1;
-                        this->_choose_if_remove(file_to_remove);
+                // Case with **
+                else if (line.find("**/") != std::string::npos) {
+                    std::string dir_pattern = line.substr(0, line.find("**/"));
+                    for (const auto& entry: fs::recursive_directory_iterator(fs::path(file).parent_path())) {
+                        if (entry.path().string().find(dir_pattern) != std::string::npos) {
+                            std::string file_to_remove = entry.path().string();
+                            if (file_to_remove.find("/.git/") != std::string::npos) continue;
+                            paths_to_remove += 1;
+                            this->_choose_if_remove(file_to_remove);
+                        }
                     }
                 }
-            }
 
-            // Normal cases
-            else {
-                std::string single_file_path = file.substr(0, file.size() - 10) + line;
-                if (fs::exists(single_file_path)) {
-                    paths_to_remove += 1;
-                    this->_choose_if_remove(single_file_path);
+                // Normal cases
+                else {
+                    std::string single_file_path = file.substr(0, file.size() - 10) + line;
+                    if (fs::exists(single_file_path)) {
+                        paths_to_remove += 1;
+                        this->_choose_if_remove(single_file_path);
+                    }
                 }
+            } catch (const fs::filesystem_error& e) {
+                continue;
             }
         }
         if (paths_to_remove == 0) {
@@ -130,7 +135,7 @@ namespace tcleaner {
             fs::remove_all(file);
             std::cout << "REMOVED.\n";
         } catch (const fs::filesystem_error& e) {
-            std::cerr << "ERROR: Cannot remove file " << file << ": " << e.what() << "\n";
+            std::cerr << "\033[1;31mERROR\033[0m: Cannot remove file " << file << ": " << e.what() << "\n";
         }
     }
 
@@ -152,7 +157,7 @@ namespace tcleaner {
         if (!this->_paths_to_ignore.empty()) {
             std::cout << "The following paths will be ignored:\n";
             for (const auto& entry: this->_paths_to_ignore) {
-                std::cout << "- " << entry << "\n";
+                std::cout << "- \033[1;36m" << entry << "\033[0m\n";
             }
             std::cout << "Do you want to proceed? (y/n): ";
             char proceed;

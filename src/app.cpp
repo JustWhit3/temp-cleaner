@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (!fs::exists(path) || !fs::is_directory(path)) {
-        std::cerr << "ERROR: inserted path is not valid!\n";
+        std::cerr << "\033[1;31mERROR\033[0m: inserted path is not valid!\n";
         std::exit(1);
     }
 
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     if (argc > 2) {
         std::ifstream file(argv[2]);
         if (!file.is_open()) {
-            std::cerr << "ERROR: cannot open " << argv[2] << " file!\n";
+            std::cerr << "\033[1;31mERROR\033[0m: cannot open " << argv[2] << " file!\n";
             std::exit(1);
         }
 
