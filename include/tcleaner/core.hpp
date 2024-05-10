@@ -21,7 +21,7 @@ namespace tcleaner {
         private:
 
             // Methods
-            void _analyze_files(std::string_view path);
+            void _analyze_files(const std::filesystem::path& path);
             void _process_gitignore(const std::string& path);
             void _remove_file(std::string_view file);
             void _choose_if_remove(std::string_view);
