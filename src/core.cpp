@@ -51,6 +51,9 @@ namespace tcleaner {
 
     // ********************* PRIVATE *********************
 
+    // Variables
+    std::string tcleaner::_parent_path;
+
     /**
      * @brief Recursively analyzes files within a directory, handling paths to be ignored and processing .gitignore
      * files.
@@ -58,9 +61,8 @@ namespace tcleaner {
      * @param path The path to analyze.
      */
     void tcleaner::_analyze_files(const std::filesystem::path& path) {
-        static const std::string gitignore_extension = ".gitignore";
-        static const std::unordered_set<std::string> paths_to_ignore_set(_paths_to_ignore.begin(),
-                                                                         _paths_to_ignore.end());
+        static const std::unordered_set<std::string> paths_to_ignore_set(this->_paths_to_ignore.begin(),
+                                                                         this->_paths_to_ignore.end());
 
         for (const auto& entry: fs::directory_iterator(path)) {
             const auto& entry_path = entry.path();
@@ -71,7 +73,7 @@ namespace tcleaner {
 
             if (entry.is_directory()) {
                 _analyze_files(entry_path);
-            } else if (entry.is_regular_file() && entry_path.filename() == gitignore_extension) {
+            } else if (entry.is_regular_file() && entry_path.filename() == ".gitignore") {
                 _process_gitignore(entry_path.string());
             }
         }
@@ -136,7 +138,7 @@ namespace tcleaner {
         }
 
         std::unordered_set<std::string> files_to_remove;
-        std::string parent_path = fs::path(file).parent_path().string();
+        this->_parent_path = fs::path(file).parent_path().string();
 
         std::string line;
         while (std::getline(file_stream, line)) {
@@ -150,7 +152,7 @@ namespace tcleaner {
                 // Case for *
                 if (line.find('*') != std::string::npos) {
                     std::string regex_pattern = std::regex_replace(line, std::regex("\\*"), ".*");
-                    for (const auto& entry: fs::recursive_directory_iterator(parent_path)) {
+                    for (const auto& entry: fs::recursive_directory_iterator(this->_parent_path)) {
                         std::string entry_path = entry.path().string();
                         if (std::regex_match(entry_path, std::regex(regex_pattern)) &&
                             entry_path.find("/.git/") == std::string::npos) {
@@ -158,10 +160,10 @@ namespace tcleaner {
                         }
                     }
 
-                // Case for ** path
+                    // Case for ** path
                 } else if (line.find("**/") != std::string::npos) {
                     std::string dir_pattern = line.substr(0, line.find("**/"));
-                    for (const auto& entry: fs::recursive_directory_iterator(parent_path)) {
+                    for (const auto& entry: fs::recursive_directory_iterator(this->_parent_path)) {
                         std::string entry_path = entry.path().string();
                         if (entry_path.find(dir_pattern) != std::string::npos &&
                             entry_path.find("/.git/") == std::string::npos) {
@@ -169,9 +171,9 @@ namespace tcleaner {
                         }
                     }
 
-                // Other cases
+                    // Other cases
                 } else {
-                    std::string single_file_path = parent_path + "/" + line;
+                    std::string single_file_path = this->_parent_path + "/" + line;
                     if (fs::exists(single_file_path)) {
                         files_to_remove.insert(single_file_path);
                     }

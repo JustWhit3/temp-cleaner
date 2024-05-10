@@ -5,6 +5,7 @@
 #define TEMP_CLEANER_CORE_HPP
 
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 namespace tcleaner {
@@ -29,6 +30,7 @@ namespace tcleaner {
             // Members
             std::string _path;
             std::vector<std::string> _paths_to_ignore;
+            static std::string _parent_path;
     };
 }  // namespace tcleaner
 
