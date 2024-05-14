@@ -6,7 +6,7 @@ services:
     ##########################################
 
     # gcc 8
-    build_gcc_10:
+    build_gcc_8:
         image: ghcr.io/rikorose/gcc-cmake:gcc-8
         network_mode: bridge
         volumes:
@@ -18,7 +18,7 @@ services:
             && cmake --build build"
 
     # gcc 9
-    build_gcc_10:
+    build_gcc_9:
         image: ghcr.io/rikorose/gcc-cmake:gcc-9
         network_mode: bridge
         volumes:
@@ -82,7 +82,7 @@ services:
     ##########################################
 
     # clang 10
-    build_clang_11:
+    build_clang_10:
         image: silkeh/clang:10
         network_mode: bridge
         volumes:
