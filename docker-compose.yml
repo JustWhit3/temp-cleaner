@@ -5,18 +5,6 @@ services:
     #      GCC
     ##########################################
 
-    # gcc 8
-    build_gcc_8:
-        image: ghcr.io/rikorose/gcc-cmake:gcc-8
-        network_mode: bridge
-        volumes:
-            - .:/proj
-        container_name: build
-        command: >
-            bash -c "cd /proj
-            && cmake -B build
-            && cmake --build build"
-
     # gcc 9
     build_gcc_9:
         image: ghcr.io/rikorose/gcc-cmake:gcc-9
@@ -80,18 +68,6 @@ services:
     ##########################################
     #      CLANG
     ##########################################
-
-    # clang 10
-    build_clang_10:
-        image: silkeh/clang:10
-        network_mode: bridge
-        volumes:
-            - .:/proj
-        container_name: build
-        command: >
-            bash -c "cd /proj
-            && cmake -B build -D CMAKE_CXX_compiler=clang++
-            && cmake --build build"
 
     # clang 11
     build_clang_11:
