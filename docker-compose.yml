@@ -1,0 +1,142 @@
+version: "2"
+services:
+
+    ##########################################
+    #      GCC
+    ##########################################
+
+    # gcc 10
+    build_gcc_10:
+        image: ghcr.io/rikorose/gcc-cmake:gcc-10
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build
+            && cmake --build build"
+
+    # gcc 11
+    build_gcc_11:
+        image: ghcr.io/rikorose/gcc-cmake:gcc-11
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build
+            && cmake --build build"
+
+    # gcc 12
+    build_gcc_12:
+        image: ghcr.io/rikorose/gcc-cmake:gcc-12
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build
+            && cmake --build build"
+
+    # gcc 13
+    build_gcc_13:
+        image: ghcr.io/rikorose/gcc-cmake:gcc-13
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build
+            && cmake --build build"
+
+    ##########################################
+    #      CLANG
+    ##########################################
+
+    # clang 11
+    build_clang_11:
+        image: silkeh/clang:11
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build -D CMAKE_CXX_compiler=clang++
+            && cmake --build build"
+
+    # clang 12
+    build_clang_12:
+        image: silkeh/clang:12
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build -D CMAKE_CXX_compiler=clang++
+            && cmake --build build"
+
+    # clang 13
+    build_clang_13:
+        image: silkeh/clang:13
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build -D CMAKE_CXX_compiler=clang++
+            && cmake --build build"
+
+    # clang 14
+    build_clang_14:
+        image: silkeh/clang:14
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build -D CMAKE_CXX_compiler=clang++
+            && cmake --build build"
+
+    # clang 15
+    build_clang_15:
+        image: silkeh/clang:15
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build -D CMAKE_CXX_compiler=clang++
+            && cmake --build build"
+
+    # clang 16
+    build_clang_16:
+        image: silkeh/clang:16
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build -D CMAKE_CXX_compiler=clang++
+            && cmake --build build"
+
+    # clang 17
+    build_clang_17:
+        image: silkeh/clang:17
+        network_mode: bridge
+        volumes:
+            - .:/proj
+        container_name: build
+        command: >
+            bash -c "cd /proj
+            && cmake -B build -D CMAKE_CXX_compiler=clang++
+            && cmake --build build"
