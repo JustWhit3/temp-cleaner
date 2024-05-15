@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/JustWhit3/temp-cleaner/blob/main/img/logo.png" height=220></p>
+<p align="center"><img src="https://github.com/JustWhit3/temp-cleaner/blob/main/img/logo.png" height=400></p>
 
 <p align="center">
   <img title="v1.0" alt="v1.0" src="https://img.shields.io/badge/version-v4.5-informational?style=flat-square">
