@@ -3,8 +3,8 @@ message: "If you use this software, please cite it as below."
 authors:
 - family-names: "Gianluca"
   given-names: "Bianco"
-title: "cppfetch"
-version: 0.1.0
-doi: 
-date-released: 
+title: "temp-cleaner"
+version: 0.0.q
+doi: https://zenodo.org/doi/10.5281/zenodo.11202845
+date-released: 16/05/24
 url: "https://github.com/JustWhit3/temp-cleaner"
