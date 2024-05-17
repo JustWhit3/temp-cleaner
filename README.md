@@ -30,7 +30,7 @@
 
 `temp-cleaner` is a an application which allows you to automatically clean up temporary files and ignored items from git repositories in your system by analyzing .gitignore files.
 
-<img src="[https://github.com/JustWhit3/osmanip/blob/main/img/csmanip_intro.gif](https://github.com/JustWhit3/temp-cleaner/blob/main/img/rec.gif)">
+<img src="https://github.com/JustWhit3/temp-cleaner/blob/main/img/rec.gif">
 
 For an overview of the available features and options see the documentation at the [Doxygen](https://justwhit3.github.io/temp-cleaner/) page.
 
