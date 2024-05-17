@@ -32,7 +32,7 @@
 
 <img src="https://github.com/JustWhit3/temp-cleaner/blob/main/img/rec.gif">
 
-For an overview of the available features and options see the documentation at the [Doxygen](https://justwhit3.github.io/temp-cleaner/) page.
+For an overview of the functions and classes please look at the [Doxygen](https://justwhit3.github.io/temp-cleaner/) page.
 
 ## Architecture support
 
@@ -49,7 +49,7 @@ For an overview of the available features and options see the documentation at t
 
 - **gcc**: v. 9/10/11/12/13
 - **clang**: v. 11/12/13/14/15/16/17
-- **MSVC**: not directly tested, but should work
+- **MSVC**: (not directly tested, but should work)
 
 ## Install and use
 
@@ -83,7 +83,7 @@ cmake -B build -DCMAKE_BUILD_TYPE=Debug
 sudo cmake --build build
 ```
 
-This will automatically compile unit tests and source code with debug tools.
+This will automatically compile the source code with debug tools.
 
 Prerequisites for debug mode:
 
@@ -106,7 +106,7 @@ Once the application is installed you can easily run it from your terminal in th
 temp-cleaner [path/to/analyze] [config_file]
 ```
 
-Where `[path/to/analyze]` represents the path through which the app will search for `.gitignore` files through repositories, while `[config_file]` can be a configuration file containing a list of paths to ignore. Both these arguments are optional.
+Where `[path/to/analyze]` represents the path through which the app will search for `.gitignore` files through repositories, while `[config_file]` can be a configuration file containing a list of paths to ignore. Both these arguments are optional and if left empty the search will proceed through the user home directory.
 
 ## Credits
 
