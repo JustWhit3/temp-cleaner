@@ -74,11 +74,14 @@ namespace tcleaner {
             if (paths_to_ignore_set.find(entry_path.string()) != paths_to_ignore_set.end()) {
                 continue;
             }
-
-            if (entry.is_directory()) {
-                _analyze_files(entry_path);
-            } else if (entry.is_regular_file() && entry_path.filename() == ".gitignore") {
-                _process_gitignore(entry_path.string());
+            try {
+                if (entry.is_directory()) {
+                    _analyze_files(entry_path);
+                } else if (entry.is_regular_file() && entry_path.filename() == ".gitignore") {
+                    _process_gitignore(entry_path.string());
+                }
+            } catch (const fs::filesystem_error& e) {
+                continue;
             }
         }
     }
